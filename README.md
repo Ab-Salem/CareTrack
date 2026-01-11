@@ -304,24 +304,6 @@ Solution: Check JWT_SECRET matches between login and verification
 - [ ] CI/CD pipeline with GitHub Actions
 - [ ] Cloud deployment (AWS/Azure)
 
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Commit Message Guidelines
-- `feat:` New feature
-- `fix:` Bug fix
-- `docs:` Documentation changes
-- `style:` Code style changes
-- `refactor:` Code refactoring
-- `test:` Test additions/changes
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
