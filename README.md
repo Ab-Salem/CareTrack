@@ -200,6 +200,7 @@ caretrack/
 │   ├── src/
 │   │   ├── components/    # React components
 │   │   │   ├── Login.js
+|   |   |   ├── Login.css
 │   │   │   ├── AddInjury.js
 │   │   │   └── InjuryList.js
 │   │   ├── services/      # API service layer
