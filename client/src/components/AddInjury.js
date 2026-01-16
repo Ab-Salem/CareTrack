@@ -6,49 +6,106 @@ function AddInjury() {
   const [description, setDescription] = useState('');
   const [severity, setSeverity] = useState(1);
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
+    setLoading(true);
 
     try {
       await createInjury({ title, description, severity: parseInt(severity) });
-      setMessage('Injury reported successfully!');
+      setMessage('✓ Injury report submitted successfully!');
       setTitle('');
       setDescription('');
       setSeverity(1);
-      window.location.reload(); // Refresh to show new injury
+      
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (err) {
-      setMessage('Error creating injury: ' + (err.response?.data?.error || err.message));
+      setMessage('✗ Error: ' + (err.response?.data?.error || err.message));
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const getSeverityColor = (level) => {
+    const colors = {
+      1: '#27ae60',
+      2: '#2ecc71',
+      3: '#f39c12',
+      4: '#e67e22',
+      5: '#e74c3c'
+    };
+    return colors[level] || '#95a5a6';
   };
 
   return (
     <div className="add-injury">
       <h2>Report New Injury</h2>
-      {message && <div className={message.includes('Error') ? 'error' : 'success'}>{message}</div>}
+      
+      {message && (
+        <div className={message.includes('Error') || message.includes('✗') ? 'error' : 'success'}>
+          {message}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Injury Title"
+          placeholder="Injury Title *"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
+          disabled={loading}
         />
+
         <textarea
-          placeholder="Description"
+          placeholder="Detailed Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          rows="3"
+          rows="4"
+          disabled={loading}
         />
-        <select value={severity} onChange={(e) => setSeverity(e.target.value)}>
-          <option value="1">Severity: 1 (Minor)</option>
-          <option value="2">Severity: 2 (Low)</option>
-          <option value="3">Severity: 3 (Moderate)</option>
-          <option value="4">Severity: 4 (High)</option>
-          <option value="5">Severity: 5 (Critical)</option>
-        </select>
-        <button type="submit">Submit Report</button>
+
+        <div style={{ marginBottom: '16px' }}>
+          <label style={{ 
+            display: 'block', 
+            marginBottom: '8px', 
+            color: '#2c3e50',
+            fontWeight: '600',
+            fontSize: '14px'
+          }}>
+            Severity Level: {severity}
+          </label>
+          <input
+            type="range"
+            min="1"
+            max="5"
+            value={severity}
+            onChange={(e) => setSeverity(e.target.value)}
+            disabled={loading}
+            style={{
+              width: '100%',
+              accentColor: getSeverityColor(parseInt(severity)),
+              marginBottom: '8px'
+            }}
+          />
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '12px',
+            color: '#7f8c8d'
+          }}>
+            <span>Minor</span>
+            <span>Critical</span>
+          </div>
+        </div>
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Submitting...' : 'Submit Report'}
+        </button>
       </form>
     </div>
   );
