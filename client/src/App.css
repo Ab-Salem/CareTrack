@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -5,9 +7,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #f5f7fa;
@@ -18,10 +18,10 @@ body {
 }
 
 .App-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1e3c72;
   color: white;
-  padding: 20px 40px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 18px 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,26 +31,18 @@ body {
 }
 
 .App-header h1 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.App-header h1::before {
-  content: "🏥";
-  font-size: 28px;
+  letter-spacing: -0.3px;
 }
 
 .user-info {
   display: flex;
   align-items: center;
   gap: 20px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
   padding: 10px 20px;
-  border-radius: 8px;
-  backdrop-filter: blur(10px);
+  border-radius: 6px;
 }
 
 .user-info span {
@@ -59,20 +51,20 @@ body {
 }
 
 .user-info button {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
 }
 
 .user-info button:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .main-content {
@@ -80,51 +72,53 @@ body {
   margin: 40px auto;
   padding: 0 20px;
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 380px 1fr;
   gap: 30px;
 }
 
 .add-injury {
   background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 28px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   height: fit-content;
   position: sticky;
   top: 100px;
+  border: 1px solid #e2e8f0;
 }
 
 .add-injury h2 {
-  color: #2c3e50;
-  margin-bottom: 20px;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.add-injury h2::before {
-  content: "➕";
+  color: #1a202c;
+  margin-bottom: 24px;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .injury-list {
   background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 28px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
 }
 
 .injury-list h2 {
-  color: #2c3e50;
+  color: #1a202c;
   margin-bottom: 24px;
-  font-size: 22px;
+  font-size: 18px;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
 }
 
-.injury-list h2::before {
-  content: "📋";
+.injury-count {
+  font-size: 14px;
+  color: #718096;
+  font-weight: 500;
+  background: #f7fafc;
+  padding: 4px 12px;
+  border-radius: 12px;
 }
 
 .injuries {
@@ -134,129 +128,197 @@ body {
 }
 
 .injury-card {
-  border: 1px solid #e8ecef;
+  border: 1px solid #e2e8f0;
   padding: 20px;
-  border-radius: 10px;
-  background: #fafbfc;
-  transition: all 0.3s ease;
+  border-radius: 8px;
+  background: white;
+  transition: all 0.2s ease;
 }
 
 .injury-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e0;
 }
 
 .injury-card h3 {
-  color: #2c3e50;
+  color: #1a202c;
   margin-bottom: 12px;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.injury-card p {
+  color: #4a5568;
+  line-height: 1.6;
+  margin: 12px 0;
+  font-size: 14px;
 }
 
 .severity {
   display: inline-block;
   padding: 4px 12px;
-  border-radius: 20px;
+  border-radius: 4px;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12px;
   margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.severity-1, .severity-2 {
-  background: #d4edda;
-  color: #155724;
+.severity-1 {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.severity-2 {
+  background: #bee3f8;
+  color: #2c5282;
 }
 
 .severity-3 {
-  background: #fff3cd;
-  color: #856404;
+  background: #feebc8;
+  color: #7c2d12;
 }
 
-.severity-4, .severity-5 {
-  background: #f8d7da;
-  color: #721c24;
+.severity-4 {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.severity-5 {
+  background: #fbb6ce;
+  color: #702459;
 }
 
 .meta {
   display: flex;
   justify-content: space-between;
   font-size: 13px;
-  color: #7f8c8d;
+  color: #718096;
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid #e8ecef;
+  border-top: 1px solid #e2e8f0;
 }
 
 .delete-btn {
-  background: #e74c3c;
+  background: #e53e3e;
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
   margin-top: 12px;
-  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
 }
 
 .delete-btn:hover {
-  background: #c0392b;
-  transform: translateY(-1px);
+  background: #c53030;
+}
+
+.delete-btn:active {
+  transform: translateY(1px);
 }
 
 .error {
-  background: #fee;
-  color: #c0392b;
+  background: #fff5f5;
+  color: #c53030;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 6px;
   margin-bottom: 16px;
-  border: 1px solid #fcc;
+  border: 1px solid #feb2b2;
+  font-size: 14px;
 }
 
 .success {
-  background: #d4edda;
-  color: #155724;
+  background: #f0fff4;
+  color: #22543d;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 6px;
   margin-bottom: 16px;
-  border: 1px solid #c3e6cb;
+  border: 1px solid #9ae6b4;
+  font-size: 14px;
 }
 
 input, textarea, select {
   width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 15px;
+  padding: 11px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 14px;
   margin-bottom: 16px;
-  transition: all 0.3s ease;
-  background: #fafafa;
-  font-family: inherit;
+  transition: all 0.2s ease;
+  background: white;
+  font-family: 'Inter', sans-serif;
+  color: #2d3748;
 }
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #3498db;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #1e3c72;
+  box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+}
+
+label {
+  display: block;
+  color: #2d3748;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 14px;
 }
 
 button[type="submit"] {
   width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 12px;
+  background: #1e3c72;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 6px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
 }
 
 button[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  background: #2a5298;
+  box-shadow: 0 4px 12px rgba(30, 60, 114, 0.3);
+}
+
+button[type="submit"]:active {
+  transform: translateY(1px);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #a0aec0;
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  color: #4a5568;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: #718096;
 }
 
 @media (max-width: 1024px) {
@@ -272,16 +334,17 @@ button[type="submit"]:hover {
 @media (max-width: 768px) {
   .App-header {
     padding: 16px 20px;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .App-header h1 {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .user-info {
-    flex-direction: column;
-    gap: 10px;
-    padding: 12px 16px;
+    width: 100%;
+    justify-content: space-between;
   }
 
   .main-content {

@@ -28,9 +28,9 @@ function Login({ onLogin }) {
       <div className="login-container">
         <div className="login-header">
           <div className="logo">
-            <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
-              <circle cx="25" cy="25" r="23" stroke="#3498db" strokeWidth="3"/>
-              <path d="M25 15 L25 35 M15 25 L35 25" stroke="#3498db" strokeWidth="3" strokeLinecap="round"/>
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
           </div>
           <h1>CareTrack</h1>
@@ -39,10 +39,6 @@ function Login({ onLogin }) {
 
         {error && (
           <div className="error-message">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <circle cx="10" cy="10" r="9" fill="#e74c3c"/>
-              <path d="M10 6 L10 11 M10 13 L10 14" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
             {error}
           </div>
         )}
@@ -87,7 +83,7 @@ function Login({ onLogin }) {
         </form>
 
         <div className="login-footer">
-          <p>Demo Credentials:</p>
+          <p>Demo Credentials</p>
           <div className="demo-creds">
             <span>Admin: admin / password123</span>
             <span>User: user / password123</span>

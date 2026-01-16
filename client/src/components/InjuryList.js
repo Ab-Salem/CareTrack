@@ -41,8 +41,8 @@ function InjuryList({ userRole }) {
   if (loading) {
     return (
       <div className="injury-list">
-        <div style={{ textAlign: 'center', padding: '40px', color: '#7f8c8d' }}>
-          Loading injury reports...
+        <div style={{ textAlign: 'center', padding: '40px', color: '#718096' }}>
+          Loading reports...
         </div>
       </div>
     );
@@ -58,17 +58,16 @@ function InjuryList({ userRole }) {
 
   return (
     <div className="injury-list">
-      <h2>Injury Reports ({injuries.length})</h2>
+      <h2>
+        Injury Reports
+        <span className="injury-count">{injuries.length}</span>
+      </h2>
       
       {injuries.length === 0 ? (
-        <div style={{ 
-          textAlign: 'center', 
-          padding: '60px 20px',
-          color: '#95a5a6'
-        }}>
-          <div style={{ fontSize: '48px', marginBottom: '16px' }}>📊</div>
-          <p style={{ fontSize: '18px', marginBottom: '8px' }}>No injury reports yet</p>
-          <p style={{ fontSize: '14px' }}>Submit your first report to get started</p>
+        <div className="empty-state">
+          <div className="empty-state-icon">📋</div>
+          <h3>No injury reports</h3>
+          <p>Submit your first report to get started</p>
         </div>
       ) : (
         <div className="injuries">
@@ -76,18 +75,20 @@ function InjuryList({ userRole }) {
             <div key={injury.id} className="injury-card">
               <h3>{injury.title}</h3>
               <span className={getSeverityClass(injury.severity)}>
-                Severity: {injury.severity}/5
+                Level {injury.severity}
               </span>
-              <p style={{ color: '#555', lineHeight: '1.6', margin: '12px 0' }}>
-                {injury.description || 'No description provided'}
-              </p>
+              <p>{injury.description || 'No additional details provided'}</p>
               <div className="meta">
-                <span>👤 {injury.username}</span>
-                <span>📅 {new Date(injury.created_at).toLocaleDateString()}</span>
+                <span>Reported by: {injury.username}</span>
+                <span>{new Date(injury.created_at).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })}</span>
               </div>
               {userRole === 'admin' && (
                 <button className="delete-btn" onClick={() => handleDelete(injury.id)}>
-                  🗑️ Delete Report
+                  Delete Report
                 </button>
               )}
             </div>

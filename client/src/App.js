@@ -36,15 +36,15 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Injury Tracker</h1>
-        {user && (
+      {user && (
+        <header className="App-header">
+          <h1>Company Injury Reporting System</h1>
           <div className="user-info">
             <span>Welcome, {user.username} ({user.role})</span>
             <button onClick={handleLogout}>Logout</button>
           </div>
-        )}
-      </header>
+        </header>
+      )}
 
       {!user ? (
         <Login onLogin={handleLogin} />
