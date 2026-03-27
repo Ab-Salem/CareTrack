@@ -1,163 +1,182 @@
-# CareTrack - Injury Tracking System
+# CareTrack – Injury Tracking System
 
-A full-stack web application for managing and tracking workplace injury reports with role-based access control.
+CareTrack is a full-stack web application for logging, managing, and tracking workplace injury reports. It supports two user roles with different permission levels and exposes a RESTful API for all core operations.
 
-![CareTrack](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+**Live demo:** [18.221.184.203](http://18.221.184.203)
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Authentication](#authentication)
+- [API Reference](#api-reference)
+- [Role Permissions](#role-permissions)
+- [Project Structure](#project-structure)
+- [Security](#security)
+- [Troubleshooting](#troubleshooting)
+
+---
 
 ## Overview
 
-CareTrack is a comprehensive injury tracking system that allows organizations to:
-- Log and manage injury reports
-- Track injury severity and details
-- Implement role-based access control (Admin vs User)
-- Maintain a secure, centralized database of incidents
+CareTrack gives organizations a centralized, secure place to record and review workplace incidents. Administrators have full control over reports, while standard users can submit and view them. All actions require authentication via JSON Web Tokens (JWT).
 
-## Features
-
-- **User Authentication**: Secure JWT-based login system
-- **Role-Based Access Control (RBAC)**:
-  - **Users**: Can create and view injury reports
-  - **Admins**: Full access including delete capabilities
-- **Injury Management**: Create, view, and delete injury reports
-- **Real-time Updates**: Dynamic UI that reflects changes immediately
-- **Responsive Design**: Mobile-friendly interface
-- **RESTful API**: Clean, well-documented API endpoints
+---
 
 ## Tech Stack
 
-### Frontend
-- React 18
-- Axios for API calls
-- CSS3 for styling
-- Local Storage for session management
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, Axios, CSS3 |
+| Backend | Node.js, Express.js |
+| Database | MySQL 8.0 |
+| Auth | JWT, Bcrypt |
+| DevOps | Git, Nodemon, dotenv |
 
-### Backend
-- Node.js
-- Express.js
-- MySQL Database
-- JWT for authentication
-- Bcrypt for password hashing
+---
 
-### DevOps & Tools
-- Git & GitHub for version control
-- Nodemon for development
-- dotenv for environment configuration
+## Getting Started
 
-## Prerequisites
+### Prerequisites
 
-Before you begin, ensure you have the following installed:
-- [Node.js](https://nodejs.org/) (v14 or higher)
-- [MySQL](https://dev.mysql.com/downloads/) (v8.0 or higher)
-- [Git](https://git-scm.com/)
-- npm (comes with Node.js)
+- [Node.js](https://nodejs.org/) v14 or higher
+- [MySQL](https://dev.mysql.com/downloads/) v8.0 or higher
+- npm (bundled with Node.js)
 
-## Installation
+### Installation
 
-### 1. Clone the Repository
+**1. Clone the repository**
+
 ```bash
-git clone https://github.com/yourusername/caretrack.git
+git clone https://github.com/Ab-Salem/caretrack.git
 cd caretrack
 ```
 
-### 2. Backend Setup
+**2. Configure the backend**
 
 ```bash
-# Navigate to server directory
 cd server
-
-# Install dependencies
 npm install
-
-# Create .env file
 cp .env.example .env
-
-# Edit .env with your configuration
-# DB_HOST=localhost
-# DB_USER=root
-# DB_PASSWORD=your_password
-# DB_NAME=injury_tracker
-# JWT_SECRET=your_secret_key
-# PORT=5000
 ```
 
-### 3. Database Setup
+Open `.env` and set the following values:
+
+```
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=injury_tracker
+JWT_SECRET=your_secret_key
+PORT=5000
+```
+
+**3. Initialize the database**
 
 ```bash
-# Login to MySQL
 mysql -u root -p
-
-# Run the schema
 source ../database/schema.sql
-
-# Or manually create the database
-CREATE DATABASE injury_tracker;
-USE injury_tracker;
-# Then paste the contents of schema.sql
 ```
 
-### 4. Frontend Setup
+**4. Install frontend dependencies**
 
 ```bash
-# Navigate to client directory
 cd ../client
-
-# Install dependencies
 npm install
 ```
 
-## 🏃‍♂️ Running the Application
+### Running the Application
 
-### Development Mode
-
-**Terminal 1 - Backend:**
-```bash
-cd server
-npm run dev
-```
-Server will run on `http://localhost:5000`
-
-**Terminal 2 - Frontend:**
-```bash
-cd client
-npm start
-```
-Application will open at `http://localhost:3000`
-
-### Production Build
+Open two terminal windows and run the following:
 
 ```bash
-cd client
-npm run build
+# Terminal 1 – backend (http://localhost:5000)
+cd server && npm run dev
+
+# Terminal 2 – frontend (http://localhost:3000)
+cd client && npm start
 ```
 
-## Default Users
+### Test Accounts
 
-The application comes with two test accounts:
+> **Note:** These credentials are for local development only. Change them before deploying to production.
 
 | Username | Password | Role |
 |----------|----------|------|
-| admin | password123 | Admin |
-| user | password123 | User |
+| `admin` | `password123` | Admin |
+| `user` | `password123` | User |
 
-**⚠️ Change these credentials in production!**
+---
 
-## API Documentation
+## Authentication
 
-### Authentication Endpoints
+CareTrack uses **JWT-based authentication**. All API endpoints except `/api/auth/login` require a valid token.
+
+**How it works:**
+
+1. The client sends credentials to `POST /api/auth/login`.
+2. On success, the server returns a signed JWT valid for the session.
+3. The client includes this token in the `Authorization` header of every subsequent request.
+
+```
+Authorization: Bearer <your_token>
+```
+
+Requests with a missing, malformed, or expired token return `401 Unauthorized`.
+
+---
+
+## API Reference
+
+### Base URL
+
+```
+http://localhost:5000/api
+```
+
+### Error Responses
+
+All endpoints return consistent error objects:
+
+```json
+{
+  "error": "A human-readable description of the problem"
+}
+```
+
+| Status Code | Meaning |
+|-------------|---------|
+| `400` | Bad request – missing or invalid fields |
+| `401` | Unauthorized – token missing or invalid |
+| `403` | Forbidden – valid token but insufficient role |
+| `404` | Not found – resource does not exist |
+| `500` | Internal server error |
+
+---
+
+### Authentication
 
 #### POST /api/auth/login
-Login to the system
+
+Authenticates a user and returns a JWT.
+
+**Request body**
+
 ```json
-Request:
 {
   "username": "admin",
   "password": "password123"
 }
+```
 
-Response:
+**Response – 200 OK**
+
+```json
 {
-  "token": "jwt_token_here",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "user": {
     "id": 1,
     "username": "admin",
@@ -166,18 +185,58 @@ Response:
 }
 ```
 
-### Injury Endpoints
+**Response – 401 Unauthorized**
 
-#### GET /api/injuries
-Get all injury reports (requires authentication)
-```bash
-Headers: Authorization: Bearer {token}
+```json
+{
+  "error": "Invalid username or password"
+}
 ```
 
-#### POST /api/injuries
-Create a new injury report (requires authentication)
+---
+
+### Injuries
+
+#### GET /api/injuries
+
+Returns all injury reports. Requires authentication.
+
+**Headers**
+
+```
+Authorization: Bearer <token>
+```
+
+**Response – 200 OK**
+
 ```json
-Request:
+[
+  {
+    "id": 1,
+    "title": "Slip and Fall",
+    "description": "Employee slipped in cafeteria",
+    "severity": 3,
+    "created_at": "2026-01-15T10:30:00Z",
+    "created_by": "user"
+  }
+]
+```
+
+---
+
+#### POST /api/injuries
+
+Creates a new injury report. Requires authentication.
+
+**Headers**
+
+```
+Authorization: Bearer <token>
+```
+
+**Request body**
+
+```json
 {
   "title": "Slip and Fall",
   "description": "Employee slipped in cafeteria",
@@ -185,127 +244,149 @@ Request:
 }
 ```
 
-#### DELETE /api/injuries/:id
-Delete an injury report (admin only)
-```bash
-Headers: Authorization: Bearer {token}
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | string | Yes | Short label for the incident |
+| `description` | string | Yes | Full description of what occurred |
+| `severity` | integer | Yes | Severity rating from `1` (minor) to `5` (critical) |
+
+**Response – 201 Created**
+
+```json
+{
+  "id": 2,
+  "title": "Slip and Fall",
+  "description": "Employee slipped in cafeteria",
+  "severity": 3,
+  "created_at": "2026-03-27T14:22:00Z",
+  "created_by": "user"
+}
 ```
+
+**Response – 400 Bad Request**
+
+```json
+{
+  "error": "severity must be an integer between 1 and 5"
+}
+```
+
+---
+
+#### DELETE /api/injuries/:id
+
+Deletes an injury report by ID. Requires Admin role.
+
+**Headers**
+
+```
+Authorization: Bearer <token>
+```
+
+**Path parameter**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | integer | The ID of the injury report to delete |
+
+**Response – 200 OK**
+
+```json
+{
+  "message": "Injury report 2 deleted successfully"
+}
+```
+
+**Response – 403 Forbidden**
+
+```json
+{
+  "error": "Admin role required to delete reports"
+}
+```
+
+**Response – 404 Not Found**
+
+```json
+{
+  "error": "Injury report not found"
+}
+```
+
+---
+
+## Role Permissions
+
+| Action | User | Admin |
+|--------|------|-------|
+| Log in | Yes | Yes |
+| View injury reports | Yes | Yes |
+| Create injury report | Yes | Yes |
+| Delete injury report | No | Yes |
+
+---
 
 ## Project Structure
 
 ```
 caretrack/
 ├── client/                 # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/    # React components
-│   │   │   ├── Login.js
-|   |   |   ├── Login.css
-│   │   │   ├── AddInjury.js
-│   │   │   └── InjuryList.js
-│   │   ├── services/      # API service layer
-│   │   │   └── api.js
-│   │   ├── App.js
-│   │   ├── App.css
-│   │   └── index.js
-│   └── package.json
+│   └── src/
+│       ├── components/     # UI components (Login, AddInjury, InjuryList)
+│       ├── services/       # Axios API layer
+│       └── App.js
 │
-├── server/                # Express backend
-│   ├── config/
-│   │   └── database.js   # DB connection
-│   ├── middleware/
-│   │   └── auth.js       # JWT middleware
-│   ├── routes/
-│   │   ├── auth.js       # Auth routes
-│   │   └── injuries.js   # Injury routes
-│   ├── .env              # Environment variables
-│   ├── index.js          # Server entry point
-│   └── package.json
+├── server/                 # Express backend
+│   ├── config/             # Database connection
+│   ├── middleware/         # JWT authentication middleware
+│   ├── routes/             # Auth and injury route handlers
+│   └── index.js            # Server entry point
 │
 ├── database/
-│   └── schema.sql        # Database schema
+│   └── schema.sql          # MySQL schema
 │
-├── .gitignore
 └── README.md
 ```
 
-## Security Features
+---
 
-- **Password Hashing**: Bcrypt with salt rounds
-- **JWT Authentication**: Secure token-based auth
-- **RBAC**: Role-based permission system
-- **Input Validation**: Server-side validation
-- **SQL Injection Protection**: Parameterized queries
-- **CORS Configuration**: Controlled cross-origin requests
+## Security
 
-## Testing
+| Feature | Implementation |
+|---------|---------------|
+| Password hashing | Bcrypt with salt rounds |
+| Authentication | JWT signed tokens |
+| Authorization | Role-based middleware on protected routes |
+| SQL injection prevention | Parameterized queries |
+| Input validation | Server-side validation on all endpoints |
+| Cross-origin control | CORS middleware configured per environment |
 
-### Manual Testing Workflow
-
-1. **Test Authentication**:
-   - Login with user account
-   - Login with admin account
-   - Test invalid credentials
-
-2. **Test User Functions**:
-   - Create injury reports
-   - View all reports
-   - Verify delete button is hidden
-
-3. **Test Admin Functions**:
-   - Login as admin
-   - Delete injury reports
-   - Verify RBAC enforcement
-
-### API Testing with Postman
-
-Import the following collection or test manually:
-
-```bash
-# Health check
-GET http://localhost:5000/api/health
-
-# Login
-POST http://localhost:5000/api/auth/login
-Body: {"username": "admin", "password": "password123"}
-
-# Get injuries (use token from login)
-GET http://localhost:5000/api/injuries
-Headers: Authorization: Bearer {your_token}
-```
+---
 
 ## Troubleshooting
 
-### Common Issues
+**Database connection error**
 
-**Issue**: Database connection error
-```
-Solution: Check .env file credentials and ensure MySQL is running
+Verify that MySQL is running and that the credentials in `server/.env` match your local setup.
+
+```bash
 mysql -u root -p
 ```
 
-**Issue**: Port 5000 already in use
-```
-Solution: Change PORT in server/.env to another port (e.g., 5001)
-```
+**Port 5000 already in use**
 
-**Issue**: CORS errors
-```
-Solution: Ensure cors() middleware is enabled in server/index.js
-```
+Change the `PORT` value in `server/.env` to an available port (e.g., `5001`) and restart the server.
 
-**Issue**: Token authentication fails
-```
-Solution: Check JWT_SECRET matches between login and verification
-```
+**CORS errors in the browser**
 
-## Future Enhancements
+Confirm that `cors()` middleware is initialized before route declarations in `server/index.js`.
 
-- [ ] Docker containerization
-- [ ] CI/CD pipeline with GitHub Actions
-- [ ] Cloud deployment (AWS/Azure)
+**Token authentication fails**
+
+Ensure the `JWT_SECRET` value in `.env` is identical for both the token-signing step (login) and the token-verification step (middleware). A mismatch causes all authenticated requests to fail.
+
+---
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
+MIT License. See `LICENSE` for details.
